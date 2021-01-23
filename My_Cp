@@ -1,0 +1,38 @@
+#include<unitstd.h>
+#include<fcnt.h>
+
+int main (int argc, char** argv)
+{
+    if(argc<3)
+    {
+        return 1 ;
+    }
+
+    int fdsrcFile = open(argv[1], O_RDONLY) ;
+
+    if(fdsrcFile == -1)
+    {
+        return 2 ;
+    }
+    int fdDsFile = open(argv[2], O_CREAT | O_WRONLY,S_IRUSR) ;
+
+    if(fdDsFile == -1)
+    {
+        return 3 ;
+
+    }
+
+    char buffer[2];
+
+    ssize_t charcount ;
+    while ((charcount = read(fdsrcFile, buffer, sizeof(buffer)))!=0)
+
+    {
+        write (fdDsFile, buffer, charcount ) ;
+
+    }
+
+    return 0 ;
+
+}
+
